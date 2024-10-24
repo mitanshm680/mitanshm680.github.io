@@ -13,35 +13,157 @@ body {
 }
 
 /* Navigation Bar */
+/* Navigation Bar */
 .navbar {
-    background-color: transparent; /* Transparent background */
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    padding: 20px 50px;
+    padding: 25px 50px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #e0f7fa; /* Adjust text color for visibility */
-    font-size: 1.8em; /* Slightly bigger font */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.navbar-inverse .navbar-nav > li > a:hover {
-    color: #ddd; /* Lighten on hover */
-}
-
-.navbar-inverse .navbar-brand {
-    color: #e0f7fa;
-    font-size: 1.8em;
+.navbar:hover {
+    background-color: rgba(15, 23, 42, 0.9);
 }
 
 .navbar-inverse .navbar-nav {
     display: flex;
-    justify-content: flex-end; /* Align navigation to the right */
-    gap: 40px; /* Spacing between the items */
+    justify-content: flex-end;
+    gap: 50px;
+    align-items: center;
+    margin: 0;
+}
+
+.navbar-inverse .navbar-nav > li {
+    position: relative;
+    list-style: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+    font-size: 1.4em;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 10px 5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+/* Fancy underline effect */
+.navbar-inverse .navbar-nav > li > a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    transition: width 0.3s ease, left 0.3s ease;
+    transform-origin: center;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+/* Glow effect on hover */
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(79, 70, 229, 0.6);
+    transform: translateY(-2px);
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+    font-size: 2em;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, #4f46e5, #06b6d4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px 0;
+    letter-spacing: 1px;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* Active state with gradient background */
+.navbar-inverse .navbar-nav > li.active > a {
+    background: linear-gradient(90deg, #4f46e5, #06b6d4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.navbar-inverse .navbar-nav > li.active > a::before {
+    width: 100%;
+    left: 0;
+}
+
+/* Fancy hover effect for nav items */
+.navbar-inverse .navbar-nav > li > a::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover::after {
+    border-color: rgba(79, 70, 229, 0.2);
+    transform: scale(1.1);
+}
+
+/* Scroll effect */
+.navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px 50px;
+}
+
+.navbar-scrolled .navbar-nav > li > a {
+    color: #1f2937;
+}
+
+.navbar-scrolled .navbar-nav > li > a:hover {
+    color: #4f46e5;
+}
+
+/* Add subtle rotation on hover */
+.navbar-inverse .navbar-nav > li {
+    transition: transform 0.3s ease;
+}
+
+.navbar-inverse .navbar-nav > li:hover {
+    transform: perspective(1000px) rotateX(5deg);
+}
+
+/* Add pulse animation for active item */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.navbar-inverse .navbar-nav > li.active {
+    animation: pulse 2s infinite;
 }
 
 /* General section styles */
