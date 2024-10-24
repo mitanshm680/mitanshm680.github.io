@@ -7,148 +7,191 @@
 
 body {
     font-family: 'Courier Prime', monospace;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #1e1e1e; /* Dark background */
+    color: #e0f7fa; /* Light text for contrast */
     line-height: 1.6;
 }
 
-/* Top Navigation */
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
+/* Navigation Bar */
+.navbar {
+    background-color: transparent; /* Transparent background */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 20px 50px;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
+.navbar-inverse .navbar-nav > li > a {
+    color: #e0f7fa; /* Adjust text color for visibility */
+    font-size: 1.8em; /* Slightly bigger font */
     text-decoration: none;
-    font-size: 1.2em;
+    transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
-    text-decoration: underline;
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #ddd; /* Lighten on hover */
+}
+
+.navbar-inverse .navbar-brand {
+    color: #e0f7fa;
+    font-size: 1.8em;
+}
+
+.navbar-inverse .navbar-nav {
+    display: flex;
+    justify-content: flex-end; /* Align navigation to the right */
+    gap: 40px; /* Spacing between the items */
+}
+
+/* General section styles */
+section {
+    padding: 150px 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Section titles */
+section h2 {
+    font-size: 3em;
+    color: #e0f7fa;
+    margin-bottom: 30px;
+}
+
+section p {
+    font-size: 1.6em;
+    max-width: 800px;
+    text-align: center;
+    color: #f0f0f0;
 }
 
 /* Intro Section */
-/* Intro Section with full centering */
 #intro {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    padding: 0 20px; /* Adjust padding as necessary */
-    background-color: rgba(0, 0, 0, 0.7); /* Darker background for contrast */
-    position: relative; /* Position for absolute children */
+    height: 100vh;
+    padding: 0 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: relative;
 }
 
 /* Faded background image */
-/* Faded background image */
 #intro::before {
     content: '';
-    background-image: url('../images/background1.png'); /* Ensure this path is correct */
-    background-size: cover; /* Cover entire section */
-    background-position: center; /* Center the background image */
-    position: absolute; /* Position behind the content */
+    background-image: url('../images/background1.png');
+    background-size: cover;
+    background-position: center;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.5; /* Adjusted to be less faded */
-    z-index: -1; /* Place it behind other content */
+    opacity: 0.75; /* Less faded background */
+    z-index: -1;
 }
 
-/* Centered container with flexbox */
+/* Centered container */
 .container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center content horizontally */
-    max-width: 1200px; /* Optional max-width to control overall layout */
+    justify-content: center;
+    max-width: 1200px;
 }
 
 /* Left side (profile image) */
 .left {
-    flex: 1; /* Flexbox to take available space */
+    flex: 1;
     display: flex;
-    justify-content: center; /* Center image within the flex item */
+    justify-content: center;
 }
 
 .left img {
     border-radius: 50%;
-    width: 60%; /* Increase image width */
-    max-width: 400px; /* Cap image size */
+    width: 65%; /* Increase size */
+    max-width: 500px; /* Larger profile image */
 }
 
 /* Divider line */
 .divider {
-    height: 400px; /* Adjust height as needed */
-    width: 3px; /* Slightly thicker line */
-    background-color: #fff; /* White divider for contrast */
-    margin: 0 40px; /* Space between the image and text */
+    height: 400px;
+    width: 3px;
+    background-color: #fff;
+    margin: 0 40px;
 }
 
 /* Right side (name, description, buttons) */
 .right {
-    flex: 2; /* Flexbox to take available space */
+    flex: 2;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align items to the left */
-    justify-content: center; /* Center vertically within this flex item */
+    flex-direction: column;
+    align-items: center; /* Center the content */
+    justify-content: center;
 }
 
 .right h1 {
-    font-size: 4em; /* Increase font size */
-    margin-bottom: 20px;
-    color: #fff; /* Change text color for better contrast */
+    font-size: 3.5em; /* Centered and smaller */
+    margin-bottom: 15px;
+    text-align: center;
+    color: #fff;
 }
 
 .right p {
-    font-size: 1.8em; /* Increase font size */
-    color: #e0f7fa; /* Lighter text color for contrast */
-    max-width: 600px; /* Description does not overflow */
+    font-size: 1.8em; /* Reduced size for better balance */
+    color: #e0f7fa;
+    max-width: 600px;
     line-height: 1.4;
-    margin-bottom: 30px; /* Space between description and buttons */
+    margin-bottom: 25px;
+    word-wrap: break-word; /* Ensure text wraps properly */
+    white-space: normal; /* Allow the text to wrap naturally */
 }
 
 /* Buttons */
 .button-group {
     display: flex;
-    justify-content: flex-start; /* Align buttons to the left under description */
-    gap: 20px;
-    margin-top: 20px; /* Ensure space from the description */
+    justify-content: center; /* Center buttons */
+    gap: 20px; /* Spacing between buttons */
+    margin-top: 20px;
 }
 
 .button-group a {
     display: inline-block;
     padding: 15px 30px;
-    font-size: 1.4em; /* Increase button font size */
-    background-color: #555; /* Grey button */
+    font-size: 1.6em; /* Larger button text */
+    background-color: #555;
     color: white;
     text-decoration: none;
     border-radius: 25px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-.button-group a:hover {
-    background-color: #777; /* Lighten on hover */
+.button-group a#resume:hover {
+    background-color: #66bb6a; /* Light green on hover */
+}
+
+.button-group a#resume:active {
+    background-color: #388e3c; /* Darker green on click */
+}
+
+.button-group a#linkedin:hover {
+    background-color: #42a5f5; /* Blue on hover */
+}
+
+.button-group a#linkedin:active {
+    background-color: #1e88e5; /* Darker blue on click */
 }
 
 /* Typing animation */
 #typed-text {
     font-family: 'Courier Prime', monospace;
-    color: #00796b;
-    white-space: pre-wrap; /* Ensures line wrapping */
+    color: #00bfa5; /* Techy green */
+    white-space: pre-wrap;
 }
 
+/* Footer */
 footer {
     text-align: center;
     padding: 10px 0;
