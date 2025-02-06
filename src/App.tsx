@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
-
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -22,11 +23,21 @@ function App() {
             <div className="flex items-center">
               <span className="text-xl font-bold text-gray-900">Mitansh Maheshwari</span>
             </div>
-            <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'projects', 'skills','coursework', 'experience', 'contact'].map((section) => (
+            {/* Mobile Menu Toggle Button */}
+            <div className="md:hidden flex items-center">
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-600 hover:text-blue-600">
+                ☰
+              </button>
+            </div>
+            {/* Navigation Links with Mobile Menu Support */}
+            <div className={`hidden md:flex items-center space-x-8 ${isMobileMenuOpen ? 'block' : 'hidden'} md:block`}>
+              {['home', 'about', 'projects', 'skills', 'coursework', 'experience', 'contact'].map((section) => (
                 <button
                   key={section}
-                  onClick={() => scrollToSection(section)}
+                  onClick={() => {
+                    scrollToSection(section);
+                    setIsMobileMenuOpen(false); // Close mobile menu on selection
+                  }}
                   className={`${
                     activeSection === section
                       ? 'text-blue-600 border-b-2 border-blue-600'
