@@ -42,11 +42,12 @@ function App() {
           </div>
         </div>
       </nav>
-      
+
       {/* Hero Section */}
-      <section id="home" className="pt-32 pb-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-          <div className="md:w-1/2 mb-10 md:mb-0">
+      <section id="home" className="relative min-h-screen flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50"></div>
+        <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 pt-32 pb-20">
+          <div className="md:w-1/2 mb-10 md:mb-0 md:px-4 md:pr-6 w-full">
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
               Hi, I'm Mitansh Maheshwari
               <span className="block text-blue-600 mt-2">Software Developer</span>
@@ -64,12 +65,12 @@ function App() {
                 </button>
               </a>
               <a
-                href="https://www.linkedin.com/in/your-profile"
+                href="https://www.linkedin.com/in/mitansh-maheshwari-5143a5265/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center">
-                  Visit LinkedIn 
+                  Visit LinkedIn
                 </button>
               </a>
             </div>
