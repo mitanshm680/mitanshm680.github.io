@@ -218,14 +218,14 @@ function App() {
           <h2 className="text-3xl font-bold text-center mb-12">Skills & Expertise</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            {/* Programming Languages */}
+            {/* Programming Languages - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Programming Languages</h3>
               <div className="space-y-3">
-                {['C', 'Python', 'Java', 'C++', 'Javascript'].map((skill) => (
+                {['C', 'Python', 'Java', 'C++', 'Javascript', 'R'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '85%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['80%', '90%', '85%', '80%', '75%', '90%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-24">{skill}</span>
                   </div>
@@ -233,14 +233,14 @@ function App() {
               </div>
             </div>
 
-            {/* Frameworks & Libraries */}
+            {/* Frameworks & Libraries - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Frameworks & Libraries</h3>
               <div className="space-y-3">
-                {['React', 'Node.js', 'Pandas', 'Numpy', 'Shiny & Tkinter'].map((skill) => (
+                {['React', 'Node.js', 'Pandas', 'Numpy', 'Shiny & Tkinter'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '75%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['80%', '75%', '90%', '85%', '80%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-24">{skill}</span>
                   </div>
@@ -248,14 +248,14 @@ function App() {
               </div>
             </div>
 
-            {/* Tools & Technologies */}
+            {/* Tools & Technologies - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Tools & Technologies</h3>
               <div className="space-y-3">
-                {['Git', 'Docker', 'IDEs', 'Linux', 'Apache Spark'].map((skill) => (
+                {['Git', 'Docker', 'IDEs', 'Linux', 'Apache Spark'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '80%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['90%', '70%', '85%', '80%', '70%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-24">{skill}</span>
                   </div>
@@ -263,14 +263,14 @@ function App() {
               </div>
             </div>
 
-            {/* Databases (New Section) */}
+            {/* Databases - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Databases</h3>
               <div className="space-y-3">
-                {['MySQL', 'PostgreSQL', 'MongoDB', 'SQLite', 'Access', 'Hadoop'].map((skill) => (
+                {['MySQL', 'PostgreSQL', 'MongoDB', 'SQLite', 'Access', 'Hadoop'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '80%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['90%', '70%', '75%', '80%', '90%', '65%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-24">{skill}</span>
                   </div>
@@ -278,14 +278,14 @@ function App() {
               </div>
             </div>
 
-            {/* Software Development (New Section) */}
+            {/* Software Development - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Software Development</h3>
               <div className="space-y-3">
-                {['Object-Oriented Programming', 'Software Testing & Debugging', 'Version Control', 'System Design', 'Data Structures & Algorithms'].map((skill) => (
+                {['Object-Oriented Programming', 'Software Testing & Debugging', 'Version Control', 'System Design', 'Data Structures & Algorithms'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '85%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['85%', '85%', '95%', '75%', '80%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-40">{skill}</span>
                   </div>
@@ -293,14 +293,14 @@ function App() {
               </div>
             </div>
 
-            {/* Data Science & Analytics Section */}
+            {/* Data Science & Analytics - Percentages modified */}
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Data Science & Analytics</h3>
               <div className="space-y-3">
-                {['Scikit-learn', 'TensorFlow', 'NLTK', 'Seaborn', 'Tableau', 'Alteryx'].map((skill) => (
+                {['Scikit-learn', 'TensorFlow', 'NLTK', 'Seaborn', 'Tableau', 'Alteryx'].map((skill, index) => (
                   <div key={skill} className="flex items-center">
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '80%' }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: ['85%', '75%', '85%', '80%', '85%', '75%'][index] }}></div>
                     </div>
                     <span className="ml-4 text-sm text-gray-600 w-24">{skill}</span>
                   </div>
