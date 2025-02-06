@@ -44,19 +44,26 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50"></div>
-        <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 pt-32 pb-20">
-          <div className="md:w-1/2 mb-10 md:mb-0 md:px-4 md:pr-6 w-full">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">
+      <section
+        id="home"
+        className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-50"
+      >
+        <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 sm:px-8 md:px-12 lg:px-16 pt-24 pb-16">
+          {/* Left Content */}
+          <div className="w-full md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
               Hi, I'm Mitansh Maheshwari
               <span className="block text-blue-600 mt-2">Software Developer</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-lg sm:text-xl text-gray-600 mb-8">
               A Computer Science student passionate about AI, Data Science & Engineering, Web Development, and creating impactful solutions.
             </p>
-            <div className="flex space-x-4">
-              <button onClick={() => scrollToSection('projects')} className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center">
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-4 sm:space-y-0">
+              <button
+                onClick={() => scrollToSection('projects')}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center"
+              >
                 View Projects <ChevronDown className="ml-2 h-4 w-4" />
               </button>
               <a href="/r2.pdf" download target="_blank" rel="noopener noreferrer">
@@ -70,20 +77,22 @@ function App() {
                 rel="noopener noreferrer"
               >
                 <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center">
-                  Visit LinkedIn
+                  Visit LinkedIn <Linkedin className="ml-2 h-4 w-4" />
                 </button>
               </a>
             </div>
           </div>
-          <div className="md:w-1/2 flex justify-center">
+          {/* Right Image */}
+          <div className="w-full md:w-1/2 flex justify-center">
             <img
               src="/Designer.png"
               alt="Profile"
-              className="rounded-full w-80 h-80 object-cover shadow-xl"
+              className="rounded-full w-60 sm:w-72 md:w-80 h-60 sm:h-72 md:h-80 object-cover shadow-xl"
             />
           </div>
         </div>
       </section>
+
 
       {/* About Section */}
       <section id="about" className="py-20 px-4">
@@ -104,22 +113,22 @@ function App() {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="font-semibold text-lg mb-4">Quick Facts</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center text-gray-600">
-                  <span className="w-32 font-medium">Location:</span>
-                  Phoenix, AZ
+              <ul className="space-y-2">
+                <li className="flex flex-wrap items-center text-gray-600 gap-x-2">
+                  <span className="min-w-32 md:w-32 font-medium">Location:</span>
+                  <span className="flex-1">Phoenix, AZ</span>
                 </li>
-                <li className="flex items-center text-gray-600">
-                  <span className="w-32 font-medium">Education:</span>
-                  BS Computer Science with minor in Data Science
+                <li className="flex flex-wrap items-center text-gray-600 gap-x-2">
+                  <span className="min-w-32 md:w-32 font-medium">Education:</span>
+                  <span className="flex-1">BS Computer Science with minor in Data Science</span>
                 </li>
-                <li className="flex items-center text-gray-600">
-                  <span className="w-32 font-medium">University:</span>
-                  Arizona State University
+                <li className="flex flex-wrap items-center text-gray-600 gap-x-2">
+                  <span className="min-w-32 md:w-32 font-medium">University:</span>
+                  <span className="flex-1">Arizona State University</span>
                 </li>
-                <li className="flex items-center text-gray-600">
-                  <span className="w-32 font-medium">Graduation:</span>
-                  May, 2026
+                <li className="flex flex-wrap items-center text-gray-600 gap-x-2">
+                  <span className="min-w-32 md:w-32 font-medium">Graduation:</span>
+                  <span className="flex-1">May, 2026</span>
                 </li>
               </ul>
             </div>
