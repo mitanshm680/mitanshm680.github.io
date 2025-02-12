@@ -1,4 +1,5 @@
 import React from 'react';
+import { TypeAnimation } from 'react-type-animation';
 import { Github, Linkedin, Mail, Download, ExternalLink, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
@@ -53,7 +54,29 @@ function App() {
           <div className="w-full md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
               Hi, I'm Mitansh Maheshwari
-              <span className="block text-blue-600 mt-2">Software Developer</span>
+              <span className="block text-blue-600 mt-2">
+                <TypeAnimation
+                  sequence={[
+                    'Software Developer',
+                    2000,
+                    '',
+                    100,
+                    'Backend Engineer',
+                    2000,
+                    '',
+                    100,
+                    'Data Engineer',
+                    2000,
+                    '',
+                    100,
+                    'Data Scientist',
+                    2000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                />
+              </span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8">
               A Computer Science student passionate about AI, Data Science & Engineering, Web Development, and creating impactful solutions.
