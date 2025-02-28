@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-dots li.slick-active div {
+    opacity: 1 !important;
+    transform: scale(1.2);
+    background-color: #3b82f6 !important; /* Bright blue when active */
+  }
+  
+  .custom-dots li div {
+    background-color: #93c5fd; /* Lighter blue when inactive */
+  }

@@ -2,6 +2,9 @@ import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { Github, Linkedin, Mail, Download, ExternalLink, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -163,74 +166,131 @@ function App() {
       <section id="projects" className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                id: 1,
-                title: "Sentiment Analysis of Amazon Product Reviews",
-                description:
-                  "Analyzed Amazon reviews using NLP techniques to determine customer sentiment trends.",
-                image:
-                  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-                tech: ["Python", "NLTK", "Scikit-learn", "Matplotlib", "Seaborn"],
-                codeLink: "https://github.com/mitanshm680/Sentiment-Analysis---Amazon-Product-Reviews",
-              },
-              {
-                id: 2,
-                title: "Inventory Management System",
-                description:
-                  "Created a Python-based inventory management system that tracks product quantities, manages orders, and generates reports. Features include user authentication, real-time inventory updates, and data visualization.",
-                image:
-                  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-                tech: ["Python", "SQL", "Shiny", "Data Visualization"],
-                codeLink: "https://github.com/mitanshm680/Inventory-Management-System",
-              },             
-              {
-                id: 3,
-                title: "Procedural World Generation",
-                description:
-                  "A C++ program using the dirtball dropping technique for procedural world generation. Showcases skills in C++, STL, data structures, and randomization to create dynamic and realistic worlds.",
-                image:
-                  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-                tech: ["C++", "Data Structures", "Randomization"],
-                codeLink: "https://github.com/mitanshm680/2D-terrainmaps",
-              },              
-            ].map((project) => (
-              <div
-                key={project.id}
-                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200"
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                    <div className="flex">
-                      <a
-                        href={project.codeLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-700 flex items-center"
-                      >
-                        <Github className="h-4 w-4 mr-1" /> Code
-                      </a>
-                    </div>
+          <div className="relative">
+            <Slider
+              dots={true}
+              infinite={true}
+              speed={500}
+              slidesToShow={2}
+              slidesToScroll={2}
+              autoplay={false}
+              responsive={[
+                {
+                  breakpoint: 640,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                  }
+                }
+              ]}
+              className="py-8"
+              nextArrow={
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ right: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              }
+              prevArrow={
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ left: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+              }
+              dotsClass="slick-dots custom-dots"
+              appendDots={dots => (
+                <div>
+                  <ul className="flex justify-center gap-2 mt-4"> {dots} </ul>
                 </div>
-              </div>
-            ))}
+              )}
+              customPaging={i => (
+                <div className="w-3 h-3 bg-blue-500 rounded-full opacity-50 hover:opacity-75 transition-opacity duration-200"></div>
+              )}
+            >
+              {[
+                {
+                  id: 1,
+                  title: "Sentiment Analysis of Amazon Product Reviews",
+                  description:
+                    "Analyzed Amazon reviews using NLP techniques to determine customer sentiment trends.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["Python", "NLTK", "Scikit-learn", "Matplotlib", "Seaborn"],
+                  codeLink: "https://github.com/mitanshm680/Sentiment-Analysis---Amazon-Product-Reviews",
+                },
+                {
+                  id: 2,
+                  title: "Inventory Management System",
+                  description:
+                    "Created a Python-based inventory management system that tracks product quantities, manages orders, and generates reports. Features include user authentication, real-time inventory updates, and data visualization.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["Python", "SQL", "Shiny", "Data Visualization"],
+                  codeLink: "https://github.com/mitanshm680/Inventory-Management-System",
+                },             
+                {
+                  id: 3,
+                  title: "Procedural World Generation",
+                  description:
+                    "A C++ program using the dirtball dropping technique for procedural world generation. Showcases skills in C++, STL, data structures, and randomization to create dynamic and realistic worlds.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["C++", "Data Structures", "Randomization"],
+                  codeLink: "https://github.com/mitanshm680/2D-terrainmaps",
+                },
+                {
+                  id: 4,
+                  title: "Spotify Data Analysis and Music Recommendation System",
+                  description:
+                    "Analyzed Spotify listening history to identify popular music genres, trends, and user preferences. And Built a music recommendation system using the Analysed data.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["R", "Spotify API", "Shiny", "dplyr", "ggplot2"],
+                  codeLink: "https://github.com/mitanshm680/Spotify-Data-Analysis-and-music-recommendation-system",
+                },
+              ].map((project) => (
+                <div key={project.id} className="px-2">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-6">
+                      <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
+                      <p className="text-gray-600 mb-4">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tech.map((tech, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex">
+                        <a
+                          href={project.codeLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-700 flex items-center"
+                        >
+                          <Github className="h-4 w-4 mr-1" /> Code
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </section>
