@@ -29,7 +29,7 @@ function App() {
               <span className="text-xl font-bold text-gray-900">Mitansh Maheshwari</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'projects', 'skills','coursework', 'experience', 'contact'].map((section) => (
+              {['home', 'about', 'projects', 'skills','coursework', 'Certifications', 'experience', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -417,7 +417,7 @@ function App() {
               "Statistical Modeling & Inference for Data Science",
               "Industry Tools for Data Science",
               "Human Computer Interaction",
-              "IBM Data Science Professional Certificate",
+              "Machine Learning for Data Science",
             ].map((course) => (
               <div key={course} className="bg-blue-50 p-4 rounded-lg shadow-md text-center border-l-4 border-blue-500">
                 <h3 className="font-semibold text-lg">{course}</h3>
@@ -427,10 +427,123 @@ function App() {
         </div>
       </section>
 
+      {/* Certification Section */}
+      <section id="Certifications" className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Certifications</h2>
+          <div className="relative">
+            <Slider
+              dots={true}
+              infinite={true}
+              speed={500}
+              slidesToShow={2}
+              slidesToScroll={2}
+              autoplay={false}
+              responsive={[
+                {
+                  breakpoint: 640,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                  }
+                }
+              ]}
+              className="py-8"
+              nextArrow={
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ right: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              }
+              prevArrow={
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ left: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+              }
+              dotsClass="slick-dots custom-dots"
+              appendDots={dots => (
+                <div>
+                  <ul className="flex justify-center gap-2 mt-4"> {dots} </ul>
+                </div>
+              )}
+              customPaging={i => (
+                <div className="w-3 h-3 bg-blue-500 rounded-full opacity-50 hover:opacity-75 transition-opacity duration-200"></div>
+              )}
+            >
+              {[
+                {
+                  id: 1,
+                  title: "IBM Data Science Professional Certificate",
+                  description:
+                    "Completed a series of courses covering data science fundamentals, including Python, SQL, and machine learning.",
+                  image: "/IBM_Data_Science_page-0001.jpg",
+                  tech: ["Python", "SQL", "Tableau", "Data Analysis", "R", "Machine Learning"],
+                  certificateLink: "https://www.coursera.org/account/accomplishments/specialization/NUT3R5BS2ZQC",
+                },
+                {
+                  id: 2,
+                  title: "Alteryx Designer Core Certification",
+                  description:
+                    "Achieved certification in Alteryx Designer Core, demonstrating proficiency in data preparation, blending, and analysis using Alteryx.",
+                  image: "/Alteryx_Designer_Core_Certification_Badge20250428-26-wrj87d_page-0001.jpg",
+                  tech: ["Alteryx", "Data Cleaning", "Building Workflows", "Automation", "ETL"],
+                  certificateLink: "https://www.credly.com/badges/e7753713-1644-4456-889e-69c443c338e9/linked_in_profile",
+                },
+              ].map((project) => (
+                <div key={project.id} className="px-2">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
+                    <div className="w-full">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full object-contain"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
+                      <p className="text-gray-600 mb-4">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tech.map((tech, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex">
+                        <a
+                          href={project.certificateLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-700 flex items-center"
+                        >
+                          🎓 View Certificate
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
+      </section>
+
       {/* Experience Section */}
       <section id="experience" className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Other Experience</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Work Experience</h2>
           <div className="space-y-8">
             
             {/* Engineering Peer Mentor */}
