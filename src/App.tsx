@@ -92,7 +92,7 @@ function App() {
               >
                 View Projects <ChevronDown className="ml-2 h-4 w-4" />
               </button>
-              <a href="/r2.pdf" download target="_blank" rel="noopener noreferrer">
+              <a href="/mitansh_resume_s.pdf" download target="_blank" rel="noopener noreferrer">
                 <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors duration-200 flex items-center">
                   Download CV <Download className="ml-2 h-4 w-4" />
                 </button>
