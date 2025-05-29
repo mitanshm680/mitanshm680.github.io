@@ -498,6 +498,15 @@ function App() {
                   tech: ["Alteryx", "Data Cleaning", "Building Workflows", "Automation", "ETL"],
                   certificateLink: "https://www.credly.com/badges/e7753713-1644-4456-889e-69c443c338e9/linked_in_profile",
                 },
+                {
+                  id: 3,
+                  title: "MongoDB Python Developer Path",
+                  description:
+                    "Completed the MongoDB Python Developer Path, focusing on building applications with MongoDB and Python.",
+                  image: "/MongoDB_PythonDev.jpg",
+                  tech: ["MongoDB", "Python", "Data Modeling", "Database Design", "CRUD Operations"],
+                  certificateLink: "https://learn.mongodb.com/c/gnslx7wWQ2aLHfg1fa7RXA",
+                },
               ].map((project) => (
                 <div key={project.id} className="px-2">
                   <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
