@@ -98,7 +98,7 @@ function App() {
                 </button>
               </a>
               <a
-                href="https://www.linkedin.com/in/mitansh-maheshwari-5143a5265/"
+                href="https://www.linkedin.com/in/mitansh-maheshwari/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -632,7 +632,7 @@ function App() {
 
             {/* LinkedIn - Opens in new tab */}
             <a
-              href="https://www.linkedin.com/in/mitansh-maheshwari-5143a5265/"
+              href="https://www.linkedin.com/in/mitansh-maheshwari/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-blue-600 transition"
@@ -674,7 +674,7 @@ function App() {
                 <a href="https://github.com/mitanshm680" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                   <Github className="h-8 w-8" />
                 </a>
-                <a href="https://www.linkedin.com/in/mitansh-maheshwari-5143a5265/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+                <a href="https://www.linkedin.com/in/mitansh-maheshwari/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
                   <Linkedin className="h-8 w-8" />
                 </a>
                 <button 
