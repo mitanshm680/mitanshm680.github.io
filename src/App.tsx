@@ -229,10 +229,10 @@ function App() {
                   id: 2,
                   title: "Inventory Management System",
                   description:
-                    "Created a Python-based inventory management system that tracks product quantities, manages orders, and generates reports. Features include user authentication, real-time inventory updates, and data visualization.",
+                    "A full-stack inventory management system built with FastAPI and React. It allows users to manage products, track inventory levels, and generate reports.",
                   image:
                     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-                  tech: ["Python", "SQL", "Shiny", "Data Visualization"],
+                  tech: ["Python", "FastAPI", "SQLAlchemy", "React", "TypeScript", "JWT", "SQLite"],
                   codeLink: "https://github.com/mitanshm680/Inventory-Management-System",
                 },             
                 {
@@ -253,6 +253,16 @@ function App() {
                   image:
                     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
                   tech: ["R", "Spotify API", "Shiny", "dplyr", "ggplot2"],
+                  codeLink: "https://github.com/mitanshm680/Spotify-Data-Analysis-and-music-recommendation-system",
+                },
+                {
+                  id: 5,
+                  title: "AI-Powered News Dashboard",
+                  description:
+                    "Developed a web application that aggregates news articles from various sources and uses AI to summarize and categorize them. The dashboard allows users to filter news by topics and provides personalized recommendations.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["React", "TypeScript", "Tailwind CSS", "Python", "FastAPI", "MongoDB", "Gemini API"],
                   codeLink: "https://github.com/mitanshm680/Spotify-Data-Analysis-and-music-recommendation-system",
                 },
               ].map((project) => (
