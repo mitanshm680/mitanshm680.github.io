@@ -263,7 +263,7 @@ function App() {
                   image:
                     "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
                   tech: ["React", "TypeScript", "Tailwind CSS", "Python", "FastAPI", "MongoDB", "Gemini API"],
-                  codeLink: "https://github.com/mitanshm680/Spotify-Data-Analysis-and-music-recommendation-system",
+                  codeLink: "https://github.com/mitanshm680/AI-Powered-News-Dashboard",
                 },
               ].map((project) => (
                 <div key={project.id} className="px-2">
