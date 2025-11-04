@@ -29,7 +29,7 @@ function App() {
               <span className="text-xl font-bold text-gray-900">Mitansh Maheshwari</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'projects', 'skills','coursework', 'Certifications', 'experience', 'contact'].map((section) => (
+              {['home', 'about', 'projects', 'Hackathons', 'skills','coursework', 'Certifications', 'experience', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -295,6 +295,165 @@ function App() {
                         >
                           <Github className="h-4 w-4 mr-1" /> Code
                         </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </div>
+      </section>
+
+      {/* Hackathons Section */}
+      <section id="Hackathons" className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Hackathon Projects</h2>
+          <div className="relative">
+            <Slider
+              dots={true}
+              infinite={true}
+              speed={500}
+              slidesToShow={2}
+              slidesToScroll={2}
+              autoplay={false}
+              responsive={[
+                {
+                  breakpoint: 640,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                  }
+                }
+              ]}
+              className="py-8"
+              nextArrow={
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ right: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              }
+              prevArrow={
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full shadow-md p-2 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+                  style={{ left: -20 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                </button>
+              }
+              dotsClass="slick-dots custom-dots"
+              appendDots={dots => (
+                <div>
+                  <ul className="flex justify-center gap-2 mt-4"> {dots} </ul>
+                </div>
+              )}
+              customPaging={i => (
+                <div className="w-3 h-3 bg-blue-500 rounded-full opacity-50 hover:opacity-75 transition-opacity duration-200"></div>
+              )}
+            >
+              {[
+                {
+                  id: 1,
+                  hackathonName: "SunHacks 2025",
+                  title: "Plz_Use_It",
+                  winner: true,
+                  award: "Third Place Winner",
+                  description:
+                    "Designed Plz_Use_It, An AI-powered app that analyzes Canvas assignments and Google Calendar events, then uses Gemini to create optimized study schedules with smart conflict resolution and real-time adjustments.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["Next.js", "TypeScript", "Google Gemini API", "Google Calendar API", "Tailwind CSS"],
+                  codeLink: "https://github.com/mitanshm680/SunHacks",
+                  devpostLink: "https://devpost.com/software/plz_use_it",
+                },
+                {
+                  id: 2,
+                  hackathonName: "Opportunity Hack 2025",
+                  title: "Sparky - A LMS education platform",
+                  winner: false,
+                  award: null,
+                  description:
+                    "Developed a full-stack Learning Management System for NMTSA (Neurologic Music Therapy Services of Arizona) to centralize music therapy education. The LMS features role-based access control, secure cloud storage for videos/PDFs, real-time content management, and mobile-responsive design.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["React", "TypeScript", "Firebase", "Firestore", "Firebase Storage", "Tailwind CSS"],
+                  codeLink: "https://github.com/2025-Arizona-Opportunity-Hack/sharky-NMTSAEducationPlatfo",
+                  devpostLink: "https://devpost.com/software/sharky-y52zxk",
+                },             
+                {
+                  id: 3,
+                  hackathonName: "DevHacks s2",
+                  title: "Thribble",
+                  winner: false,
+                  award: null,
+                  description:
+                    "Built a student-only marketplace app using React Native and TypeScript for buying, selling, and trading campus essentials. Features .edu email verification for trust, AI-powered price suggestions, smart recommendations based on location and behavior, integrated messaging system, and points-based rewards program.",
+                  image:
+                    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+                  tech: ["React", "TypeScript", "Node.js", "Firebase"],
+                  codeLink: "https://github.com/mitanshm680/DevHacks-Startup-Track",
+                  devpostLink: "https://devpost.com/software/thribble",
+                },
+              ].map((project) => (
+                <div key={project.id} className="px-2">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
+                    <div className="relative">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-48 object-cover"
+                      />
+                      {project.winner && (
+                        <div className="absolute top-3 right-3 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                          🏆 {project.award}
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <div className="text-blue-600 text-sm font-semibold mb-2">{project.hackathonName}</div>
+                      <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
+                      <p className="text-gray-600 mb-4">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tech.map((tech, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex gap-4">
+                        <a
+                          href={project.codeLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-700 flex items-center"
+                        >
+                          <Github className="h-4 w-4 mr-1" /> Code
+                        </a>
+                        {project.devpostLink && (
+                          <a
+                            href={project.devpostLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-700 flex items-center"
+                          >
+                            <svg className="h-4 w-4 mr-1" viewBox="0 0 280 280" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M140 0c77.32 0 140 62.68 140 140s-62.68 140-140 140S0 217.32 0 140 62.68 0 140 0z" fill="#003E54"/>
+                              <path d="M140 280C62.8 280 0 217.2 0 140S62.8 0 140 0s140 62.8 140 140-62.8 140-140 140zm0-270C68.3 10 10 68.3 10 140s58.3 130 130 130 130-58.3 130-130S211.7 10 140 10z" fill="#003E54"/>
+                              <path d="m117.68 129.5 30.01 34.4a8.37 8.37 0 0 0 12.52.3l27.82-32.9v-.6L117.68 60v69.5z" fill="currentColor"/>
+                              <path d="M131.48 117.68H89.96v44.64h41.52a22.32 22.32 0 1 0 0-44.64z" fill="currentColor"/>
+                            </svg>
+                            Devpost
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -578,6 +737,22 @@ function App() {
                 <li>Guided first-year engineering students by providing academic and career support.</li>
                 <li>Organized mentoring sessions to help students navigate coursework and university resources.</li>
                 <li>Organized engineering-focused events to foster knowledge sharing and networking within the student community</li>
+              </ul>
+            </div>
+
+            {/* Full Stack Developer (Capstone) */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-semibold text-lg">Full Stack Developer</h3>
+                  <p className="text-blue-600">Qualaces Inc.</p>
+                </div>
+                <p className="text-gray-600 text-sm">August 2025 - Present</p>
+              </div>
+              <ul className="list-disc list-inside text-gray-600 space-y-2">
+                <li>Developed full-stack QA testing tool using React, Java Spring Boot, and AWS.</li>
+                <li>Engineered RESTful APIs with Spring Boot implementing authentication and database optimization strategies.</li>
+                <li>Built responsive React frontend with Material-UI featuring data visualization and file processing.</li>
               </ul>
             </div>
 
