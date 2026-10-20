@@ -12,7 +12,7 @@ import {
   easeInOutCubic,
   easeOutBack,
   easeOutCubic,
-  fitGrid,
+  flowFit,
   lerp,
   offsetWithin,
   quad,
@@ -131,6 +131,11 @@ interface PieceL {
   ph: number;
   p0: number;
   p1: number;
+  /** Didn't fit on its screen: tucks into the "+N" marker and fades. */
+  hide: boolean;
+  /** Which TV it lands on, and its turn in that TV's rotation. */
+  ti: number;
+  j: number;
   landed: boolean;
   o: number;
   moved: boolean;
@@ -154,6 +159,15 @@ interface TileL {
   on: number;
   isOn: boolean;
   s: number;
+  /** Programme cards the landed pieces turn into (cycling TVs). */
+  cards: HTMLElement[];
+  cardO: number[];
+  cycle: boolean;
+  n: number;
+  off: number;
+  show: number;
+  vis: number;
+  noise: boolean;
 }
 interface SectionL {
   name: string;
@@ -176,6 +190,7 @@ interface Layout {
   C0: number;
   C1: number;
   av: number;
+  avLand: number;
   restY: number;
   followY: number;
   fitCs: number;
@@ -262,7 +277,6 @@ export function UnrollIntro() {
   const skipRef = useRef<HTMLButtonElement>(null);
   const guideRef = useRef<HTMLDivElement>(null);
   const guideTitleRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLUListElement>(null);
   const tileEls = useRef<Partial<TileEls>[]>(TILES.map(() => ({})));
 
   const lay = useRef<Layout>({ ok: false } as Layout);
@@ -297,6 +311,7 @@ export function UnrollIntro() {
     glitch: false,
     rays: false,
     ti: -1,
+    readyT: 0,
   });
 
   // Jittered grid that the parchment shatters along (shared vertices so the pieces tile).
@@ -410,7 +425,7 @@ export function UnrollIntro() {
     const tiles: TileL[] = [];
     const slotBoxes = tileEls.current.map((t) => (t.slot ? offsetWithin(t.slot, stage) : { x: 0, y: 0, w: 1, h: 1 }));
 
-    // pieces: blown outward, then flown home to their tile slots
+    // pieces: blown outward, then flown home to their listings
     const r = rng(2026);
     const all = Array.from(content.querySelectorAll<HTMLElement>('[data-piece]'));
     const pieces: PieceL[] = [];
@@ -418,7 +433,34 @@ export function UnrollIntro() {
       const mine = all.filter((el) => (el.dataset.tile as TileId) === tile.id);
       const sizes = mine.map((el) => ({ w: el.offsetWidth, h: el.offsetHeight }));
       const box = slotBoxes[ti];
-      const grid = fitGrid(sizes, box, mobile ? 4 : 6, 1);
+      const cycle = tile.fit === 'cycle';
+      // cycling TVs show each piece on its own, as big as the screen allows
+      const fit = cycle
+        ? {
+            scale: 1,
+            shown: sizes.length,
+            more: null,
+            centers: sizes.map(() => ({ x: box.x + box.w / 2, y: box.y + box.h / 2 })),
+          }
+        : flowFit(sizes, box, {
+            gap: mobile ? 3 : 5,
+            maxScale: 1,
+            readable: mobile ? 0.55 : 0.68,
+            align: 'center',
+            moreW: mobile ? 26 : 34,
+          });
+      const fitOne = (z: { w: number; h: number }) =>
+        Math.min(tile.id === 'main' ? 1.3 : 1.1, box.w / z.w, box.h / z.h);
+      const els = tileEls.current[ti] as TileEls;
+      const cardEls = els.cards ? (Array.from(els.cards.children) as HTMLElement[]) : [];
+      if (els.more) {
+        const hidden = sizes.length - fit.shown;
+        els.more.textContent = hidden > 0 ? `+${hidden}` : '';
+        if (fit.more) {
+          els.more.style.left = `${(fit.more.x - box.x).toFixed(1)}px`;
+          els.more.style.top = `${(fit.more.y - box.y).toFixed(1)}px`;
+        }
+      }
       let last = 0;
       mine.forEach((el, j) => {
         const o = offsetWithin(el, content);
@@ -441,7 +483,8 @@ export function UnrollIntro() {
         last = Math.max(last, p1);
         const ph = r() * Math.PI * 2;
         const a2 = { x: a.x + dx * 14, y: a.y + dy * 14 - 10 + Math.sin(p0 * 90 + ph) * 3 };
-        const t = grid.centers[j];
+        const hide = j >= fit.shown;
+        const t = fit.centers[j];
         // arc home along a sideways bow, lifted a little
         const mx = (a2.x + t.x) / 2;
         const my = (a2.y + t.y) / 2;
@@ -464,23 +507,43 @@ export function UnrollIntro() {
           sA: 1.1 + r() * 0.3,
           c: { x: mx + nx * off, y: my + ny * off - (mobile ? 50 : 100) },
           t,
-          ts: grid.scale,
+          // on card TVs the pieces sink into the screen as they arrive
+          ts: cycle ? fitOne(sizes[j]) * 0.8 : hide ? fit.scale * 0.35 : fit.scale,
           spin: spinPick < 0.3 ? -360 : spinPick < 0.6 ? 360 : 0,
           ph,
           p0,
           p1,
+          hide,
+          ti,
+          j,
           landed: el.dataset.landed === 'true',
           o: -1,
           moved: true,
         });
       });
-      const els = tileEls.current[ti] as TileEls;
-      tiles.push({ els, p0: P.tiles0 + ti * P.tileStagger, on: last || P.ready, isOn: els.bezel?.dataset.on === 'true', s: -1 });
+      tiles.push({
+        els,
+        p0: P.tiles0 + ti * P.tileStagger,
+        on: last || P.ready,
+        isOn: els.bezel?.dataset.on === 'true',
+        s: -1,
+        cards: cardEls,
+        cardO: cardEls.map(() => -1),
+        cycle: cardEls.length > 1,
+        n: cardEls.length,
+        off: ti * 0.37,
+        show: -1,
+        vis: 1,
+        noise: false,
+      });
     });
 
-    // landing spot: standing on the top-right corner of the channel grid
-    const g = gridRef.current ? offsetWithin(gridRef.current, stage) : { x: Vw / 2, y: Vh / 2, w: 0, h: 0 };
-    const land = { x: g.x + g.w - (mobile ? 30 : 52), y: g.y - 3 };
+    // landing spot: standing on top of the top-right TV
+    const sets = tiles.filter((tl) => tl.els.bezel).map((tl) => offsetWithin(tl.els.bezel, stage));
+    const topY = sets.length ? Math.min(...sets.map((b) => b.y)) : hdr + 120;
+    const corner = sets.filter((b) => b.y <= topY + 2).sort((a, b) => b.x - a.x)[0] ?? { x: Vw - 200, y: topY, w: 160, h: 120 };
+    const land = { x: corner.x + corner.w * 0.78, y: corner.y + 1 };
+    const avLand = clamp((land.y - hdr - 8) / 150, 0.4, av);
     if (guideTitleRef.current) guideTitleRef.current.style.transformOrigin = '0 60%';
 
     // parchment shards (bounding boxes + local polygons so each stays small)
@@ -572,6 +635,7 @@ export function UnrollIntro() {
       C0,
       C1,
       av,
+      avLand,
       restY,
       followY,
       fitCs,
@@ -808,6 +872,44 @@ export function UnrollIntro() {
       }
     }
 
+    // --- card TVs: tune in once their pieces land, then flick between programmes
+    const CYCLE = 3.4;
+    if (p >= P.ready && !S.readyT) S.readyT = t;
+    for (const tl of W.tiles) {
+      if (!tl.n) continue;
+      const live = p >= tl.on;
+      let show = 0;
+      let vis = 1;
+      if (tl.cycle && p >= P.ready) {
+        const c = (t - S.readyT) / CYCLE + 1 - tl.off / CYCLE;
+        show = Math.floor(c) % tl.n;
+        const u = c - Math.floor(c);
+        vis = Math.min(1, u / 0.05, (1 - u) / 0.05);
+      }
+      tl.vis = vis;
+      for (let i = 0; i < tl.n; i++) {
+        const o = live && i === show ? vis : 0;
+        if (Math.abs(o - tl.cardO[i]) > 0.001) {
+          tl.cards[i].style.opacity = o.toFixed(3);
+          tl.cardO[i] = o;
+        }
+      }
+      if (show !== tl.show) {
+        tl.show = show;
+        if (tl.els.count && tl.cycle) tl.els.count.textContent = `${show + 1}/${tl.n}`;
+      }
+      if (tl.els.count && tl.cycle) tl.els.count.style.opacity = live ? '1' : '0';
+      // a flick of static as the set tunes in, and between programmes
+      const flick = bump(p, tl.on - 0.002, tl.on + 0.001, tl.on + 0.009);
+      const nz = Math.max(flick, 1 - vis);
+      const noise = nz > 0.001;
+      if (noise !== tl.noise && tl.els.noise) {
+        tl.els.noise.style.display = noise ? 'block' : 'none';
+        tl.noise = noise;
+      }
+      if (noise && tl.els.noise) tl.els.noise.style.opacity = (0.95 * nz).toFixed(3);
+    }
+
     // --- résumé pieces: ink in while unrolling, rattle, blow apart, then fly to their channels
     const fcs = W.fitCs;
     const blastE = easeOutCubic(range(p, P.burst, P.blast1));
@@ -832,11 +934,15 @@ export function UnrollIntro() {
         }
         continue;
       }
-      if (pc.o !== 1) {
-        pc.el.style.opacity = '1';
-        pc.o = 1;
-      }
       const k = range(p, pc.p0, pc.p1);
+      const tv = W.tiles[pc.ti];
+      let o = 1;
+      if (pc.hide) o = 1 - range(k, 0.6, 1);
+      else if (tv.n) o = 1 - range(k, 0.5, 1);
+      if (o !== pc.o) {
+        pc.el.style.opacity = o.toFixed(3);
+        pc.o = o;
+      }
       let pos: Pt;
       let s: number;
       let rot: number;
@@ -871,13 +977,15 @@ export function UnrollIntro() {
       const s = range(p, tl.p0, tl.p0 + 0.035);
       if (Math.abs(s - tl.s) > 0.0005) {
         tl.els.bezel.style.opacity = s > 0 ? String(Math.min(1, s * 2.5)) : '0';
-        tl.els.screen.style.transform = `scaleY(${lerp(0.02, 1, easeOutCubic(s)).toFixed(4)})`;
+        // each set powers on like a CRT
+        tl.els.screen.style.transform = s >= 1 ? '' : `scaleY(${lerp(0.02, 1, easeOutCubic(s)).toFixed(4)})`;
         tl.els.flash.style.opacity = s > 0 ? (1 - s).toFixed(3) : '0';
         tl.s = s;
       }
       const on = p >= tl.on;
       if (on !== tl.isOn) {
         tl.els.bezel.dataset.on = on ? 'true' : 'false';
+        if (tl.els.more) tl.els.more.style.opacity = on ? '1' : '0';
         tl.isOn = on;
       }
     }
@@ -900,7 +1008,8 @@ export function UnrollIntro() {
       (g as HTMLElement & { inert: boolean }).inert = !ready;
     }
 
-    // --- headline + skip
+    // --- headline + skip (the status line bows out once the guide is up)
+    if (osdTopRef.current) osdTopRef.current.style.opacity = (1 - range(p, P.title0, P.ready)).toFixed(3);
     const hd = range(p, 0, 0.035);
     headlineRef.current!.style.opacity = (1 - hd).toFixed(3);
     headlineRef.current!.style.transform = `translate3d(-50%,${(40 * hd).toFixed(1)}px,0)`;
@@ -1031,7 +1140,7 @@ export function UnrollIntro() {
       const sq = range(p, P.avEnd, P.land);
       const sy2 = 1 - 0.2 * Math.sin(Math.PI * sq);
       const sx2 = 1 + 0.14 * Math.sin(Math.PI * sq);
-      const neck1 = { x: W.land.x, y: W.land.y - FEET_Y * W.av * sy2 };
+      const neck1 = { x: W.land.x, y: W.land.y - FEET_Y * W.avLand * sy2 };
       // blown up and over, upside down, frozen there during the pause
       const apex = {
         x: lerp(neck0.x, W.land.x, 0.55),
@@ -1065,7 +1174,7 @@ export function UnrollIntro() {
         };
         pos = quad({ x: apex.x, y: apex.y - 6 }, ctrl, neck1, e);
         rot = lerp(Math.PI, Math.PI * 4, e);
-        scl = lerp(big, W.av, e);
+        scl = lerp(big, W.avLand, e);
         pose = e < 0.82 ? 1 : 1 + range(e, 0.82, 1);
         flail = 1 - range(e, 0.7, 0.9);
       }
@@ -1335,7 +1444,6 @@ export function UnrollIntro() {
             <ChannelGuide
               mode="animated"
               titleRef={guideTitleRef}
-              gridRef={gridRef}
               onTile={(i, els) => {
                 tileEls.current[i] = { ...tileEls.current[i], ...els };
               }}

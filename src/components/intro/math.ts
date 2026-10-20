@@ -86,3 +86,85 @@ export function fitGrid(
     }),
   };
 }
+
+/**
+ * Lay boxes out left to right like listings in a TV guide, wrapping onto new lines,
+ * at one shared scale. Prefers showing everything; if that would make things smaller
+ * than `readable`, it shows as many as fit at a readable size and reports where a
+ * "+N more" marker goes (hidden items are sent to that spot).
+ */
+export function flowFit(
+  sizes: { w: number; h: number }[],
+  box: { x: number; y: number; w: number; h: number },
+  opts: { gap?: number; maxScale?: number; readable?: number; align?: 'start' | 'center'; moreW?: number } = {},
+) {
+  const { gap = 6, maxScale = 1, readable = 0.7, align = 'start', moreW = 44 } = opts;
+  const moreH = 16;
+  const n = sizes.length;
+
+  const flow = (s: number, count: number, reserve: number) => {
+    const lines: { items: number[]; w: number; h: number }[] = [];
+    let cur = { items: [] as number[], w: 0, h: 0 };
+    for (let i = 0; i < count; i++) {
+      const w = sizes[i].w * s;
+      const h = sizes[i].h * s;
+      const next = cur.items.length ? cur.w + gap + w : w;
+      if (cur.items.length && next > box.w) {
+        lines.push(cur);
+        cur = { items: [], w: 0, h: 0 };
+      }
+      cur.w = cur.items.length ? cur.w + gap + w : w;
+      cur.h = Math.max(cur.h, h);
+      cur.items.push(i);
+    }
+    if (cur.items.length) lines.push(cur);
+    const H = lines.reduce((a, l) => a + l.h, 0) + gap * Math.max(0, lines.length - 1);
+    const last = lines[lines.length - 1];
+    const wide = lines.every((l) => l.w <= box.w + 0.5);
+    // the "+N" marker sits at the end of the last line, or on a line of its own
+    const inline = !reserve || !last || last.w + gap + reserve <= box.w + 0.5;
+    const ownLine = !!reserve && !inline;
+    const total = ownLine ? H + gap + moreH : H;
+    return { lines, H: total, ok: wide && total <= box.h + 0.5, ownLine };
+  };
+  /** Largest scale in [lo, maxScale] at which the first `count` items fit, or 0. */
+  const best = (count: number, lo: number, reserve: number) => {
+    if (!flow(lo, count, reserve).ok) return 0;
+    let a = lo;
+    let b = maxScale;
+    if (flow(b, count, reserve).ok) return b;
+    for (let k = 0; k < 18; k++) {
+      const m = (a + b) / 2;
+      if (flow(m, count, reserve).ok) a = m;
+      else b = m;
+    }
+    return a;
+  };
+
+  let shown = n;
+  let scale = n ? best(n, readable, 0) || best(n, readable * 0.82, 0) : 1;
+  if (n && !scale) {
+    shown = n - 1;
+    while (shown > 1 && !best(shown, readable, moreW)) shown--;
+    scale = best(shown, readable, moreW) || best(shown, 0.2, moreW) || readable;
+  }
+
+  const { lines, H, ownLine } = flow(scale, shown, shown < n ? moreW : 0);
+  const centers: Pt[] = new Array(n);
+  let y = box.y + Math.max(0, (box.h - H) / 2);
+  let more = null as Pt | null;
+  lines.forEach((l, li) => {
+    let x = align === 'center' ? box.x + (box.w - l.w) / 2 : box.x;
+    for (const i of l.items) {
+      const w = sizes[i].w * scale;
+      centers[i] = { x: x + w / 2, y: y + l.h / 2 };
+      x += w + gap;
+    }
+    if (li === lines.length - 1 && shown < n && !ownLine) more = { x, y: y + l.h / 2 };
+    y += l.h + gap;
+  });
+  if (shown < n && ownLine) more = { x: align === 'center' ? box.x + (box.w - moreW) / 2 : box.x, y: y + moreH / 2 };
+  const sink: Pt = (more as Pt | null) ?? { x: box.x + box.w - moreW / 2, y: box.y + box.h / 2 };
+  for (let i = shown; i < n; i++) centers[i] = { x: sink.x + moreW / 2, y: sink.y };
+  return { scale, centers, shown, more };
+}
